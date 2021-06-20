@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
-
 <!DOCTYPE html>
-
-
-
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -22,7 +17,6 @@
     </head>
     <body class="d-flex flex-column">
         <main class="flex-shrink-0">
-          
             <!-- Page Content-->
             <section class="py-5">
                 <div class="container px-5 my-5">
@@ -40,13 +34,11 @@
                                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{lecture.level}}</a>
                                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{lecture.category}}</a>
                                 </header>
-
-                           
-                                <!-- Preview image figure-->
+                                  <!-- Preview image figure-->
                                 {%if lecture.thumbnail %}
                                     <figure class="mb-4"><img class="img-fluid rounded" src="{{lecture.thumbnail.url}}" alt="..." /></figure>
                                 {% endif %}
-                                강의설명 :{{lecture.summary}}
+                                강의설명 : {{lecture.summary}}
                                 <br><br><br>
 
                                 <button type="button" class="btn btn-secondary">수강신청</button>
@@ -75,19 +67,14 @@
                                             <figure class="mb-4"><img class="img-fluid rounded" src="{{lecture.schedule.url}}" alt="..." /></figure>
                                             {% endif %}   
                                         </div>
-                                        <div class="tab-pane fade" id="introduce" role="tabpanel" aria-labelledby="introduce-tab">...</div>
+                                        <div class="tab-pane fade" id="introduce" role="tabpanel" aria-labelledby="introduce-tab">
+                                            {{lecture.host}}
+                                        </div>
                                         <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
                                       </div>
-                                </div>
-                                    
-                                    <br><br><br>
-                                                                     
-                                  
+                                </div><br><br><br>
                                 </section>
-                            </article>
-
-                            <br><br><br>
-                            
+                            </article><br><br><br>
                     </div>
                 </div>
             </section>
