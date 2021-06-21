@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<section id="logout-page">
+    <div>
+        <h1><a href="{% url 'mainPage:main' %}">HI-MENTEES</a></h1>
+    </div>
+    <div class="logout-sec">
+        <form class="logout" method="POST" action="{% url 'account_logout' %}">
+            {% csrf_token %} {{ form.as_p}}
+            <p>정말 로그아웃 하시겠습니까?</p>
+            <div class="logout-btn">
+                <input type="submit" class="upload-btn" value="로그아웃">
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
