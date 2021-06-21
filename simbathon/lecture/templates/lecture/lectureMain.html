@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
-
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+    <div class="container px-4 px-lg-5">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="second-tab" data-bs-toggle="tab" data-bs-target="#second" type="button" role="tab" aria-controls="second" aria-selected="false">카테고리1</button>
+              <button class="nav-link " id="second-tab" data-bs-toggle="tab" data-bs-target="#second" type="button" role="tab" aria-controls="second" aria-selected="false">카테고리1</button>
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="third-tab" data-bs-toggle="tab" data-bs-target="#third" type="button" role="tab" aria-controls="third" aria-selected="false">카테고리2</button>
@@ -21,10 +19,10 @@
               <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             
                 {%for lecture in lectures %}
-                <div class="col mb-5">
+                <div class="col mb-5 mt-5">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
