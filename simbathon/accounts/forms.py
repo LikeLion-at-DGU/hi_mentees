@@ -13,11 +13,11 @@ class SignupForm(forms.Form):
         ('강사', '강사'),
     )
 
-    name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':''}))
-    job = forms.ChoiceField(choices= JOB_CHOICE)
-    school = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':'ex)동국대학교'}))
-    grade = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':'ex)중학교 1학년'}))
-    interests = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':''}))
+    name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':''}), label= '이름')
+    job = forms.ChoiceField(choices= JOB_CHOICE, label='상태')
+    school = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':'ex)동국대학교'}), label='학교')
+    grade = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':'ex)중학교 1학년'}), label='학년')
+    interests = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder':''}), label='관심분야')
 
     def signup(self, request, user):
         userProfile = UserProfile()
