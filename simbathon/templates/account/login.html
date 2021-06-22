@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<section id="login-page">
+    <div>
+        <h1><a href="{% url 'mainPage:main' %}">HI-MENTEES</a></h1>
+    </div>
+    <div class="login-sec">
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %} {{ form.as_p}}
+            <div class="login-btn">
+                <input type="submit" class="upload-btn" value="로그인">
+            </div>
+        </form>
+    </div><br>
+    <div>
+        <p>회원이 아니신가요? <a href="{% url 'account_signup' %}">회원가입</a></p>
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<section id="signup-page">
+  <div>
+    <h1><a href="{% url 'mainPage:main' %}">HI-MENTEES</a></h1><br>
+  </div>  
+  <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+  <div class="signup-sec">
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="upload-btn">회원가입</button>   
+    </form>
+  </div>
+</section>
+{% endblock %}
