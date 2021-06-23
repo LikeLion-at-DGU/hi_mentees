@@ -46,7 +46,7 @@
                                         <h5 class="fw_bolder">강의설명 :</h5>
                                         {{lecture.summary}}
                                         <br><br><br>
-                                        <button href="#" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강신청</button>
+                                        <button href="{% url 'lecture:enrol_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강신청</button>
                                         <br><br><br> 
                                     </div>        
                                     <!-- Preview image figure-->
