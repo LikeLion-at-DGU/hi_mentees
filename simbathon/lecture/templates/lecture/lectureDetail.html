@@ -46,7 +46,17 @@
                                         <h5 class="fw_bolder">강의설명 :</h5>
                                         {{lecture.summary}}
                                         <br><br><br>
-                                        <button href="{% url 'lecture:enrol_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강신청</button>
+                                        {% if user.is_authenticated %}
+                                            {% if user in lecture.enrol_students.all %}
+                                            <a href="{% url 'lecture:drop_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강취소</a>
+                                            {% else %}
+                                            <a href="{% url 'lecture:enrol_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강신청</a>
+                                            {% endif %}
+                                        {% else %}
+                                        수강신청을 위해 로그인 하세요.
+                                        <a href="{% url 'account_login' %}" class="btn btn-secondary" >로그인</a>
+                                        <a href="{% url 'account_signup' %}" class="btn btn-secondary" >회원가입</a>
+                                        {% endif %}
                                         <br><br><br> 
                                     </div>        
                                     <!-- Preview image figure-->
