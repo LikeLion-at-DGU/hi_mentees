@@ -1,11 +1,13 @@
 from .models import Lecture
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
-
+from datetime import datetime
 
 def index(request):
-    lectures=Lecture.objects.all()
-    return render(request, 'lecture/lectureMain.html',{'lectures':lectures})
+    now=datetime.now()
+    ing_lectures=Lecture.objects.filter(app_end_date__gte=now,app_start_date__lte=now)
+    expected_lectures=Lecture.objects.filter(app_start_date__gte=now)
+    return render(request, 'lecture/lectureMain.html',{'ing_lectures':ing_lectures, 'expected_lectures':expected_lectures})
 
 def detail(request, id):
     lecture=get_object_or_404(Lecture, pk=id)
@@ -25,3 +27,4 @@ def drop_student(request, id):
     lectures=Lecture.objects.all()
     return render(request, 'lecture/lectureMain.html',{'lectures':lectures})
    
+

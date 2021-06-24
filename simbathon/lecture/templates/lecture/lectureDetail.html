@@ -24,8 +24,7 @@
                             <!-- Post content-->                     
                                 <!-- Post header-->
                                 <header class="mb-4">
-                                    <div>
-                                        
+                                    <div>   
                                         <!-- Post title-->
                                         <h1 class="fw-bolder mb-1">{{lecture.title}}</h1>
                                         <!-- Post categories-->
@@ -47,10 +46,14 @@
                                         {{lecture.summary}}
                                         <br><br><br>
                                         {% if user.is_authenticated %}
-                                            {% if user in lecture.enrol_students.all %}
-                                            <a href="{% url 'lecture:drop_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강취소</a>
+                                            {% if user.userprofile.job == '학생' %}
+                                                {% if user in lecture.enrol_students.all %}
+                                                <a href="{% url 'lecture:drop_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강취소</a>
+                                                {% else %}
+                                                <a href="{% url 'lecture:enrol_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강신청</a>
+                                                {% endif %}
                                             {% else %}
-                                            <a href="{% url 'lecture:enrol_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강신청</a>
+                                                수강신청 권한이 없습니다.
                                             {% endif %}
                                         {% else %}
                                         수강신청을 위해 로그인 하세요.
