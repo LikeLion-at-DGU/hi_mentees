@@ -7,4 +7,5 @@ urlpatterns = [
     path('<str:id>',detail, name="detail"),
     path('enrol/<str:id>/',enrol_student,name='enrol_student'),
     path('drop/<str:id>/',drop_student,name="drop_student"),
+    path('<int:pk>/like/',like, name='like'),
 ]

@@ -1,5 +1,5 @@
 from .models import Lecture
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
@@ -25,6 +25,13 @@ def drop_student(request, id):
     lecture.enrol_students.remove(request.user)
     lecture.save()
     lectures=Lecture.objects.all()
-    return render(request, 'lecture/lectureMain.html',{'lectures':lectures})
+    return render(request, 'lecture/lectureDetail.html',{'lecture':lecture})
+    
    
-
+def like(request, pk):
+    lecture=get_object_or_404(Lecture, pk=pk)
+    if request.user in lecture.like_users.all():
+        lecture.like_users.remove(request.user)
+    else:
+        lecture.like_users.add(request.user)
+    return redirect('lecture:detail', lecture.id)

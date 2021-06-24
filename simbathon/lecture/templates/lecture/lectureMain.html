@@ -35,7 +35,27 @@
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">{{lecture.title}}</h5>
                                 {{lecture.host}} <br><br>
-                                <span style ="font-size:0.8em">난이도 : {{lecture.level}}</span>
+                                <span style ="font-size:0.8em">난이도 : </span>
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color:grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
                             </div>
                         </div>
                         <!-- Product actions-->
@@ -65,7 +85,28 @@
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">{{lecture.title}}</h5>
                                 {{lecture.host}} <br><br>
-                                <span style ="font-size:0.8em">난이도 : {{lecture.level}}</span>
+                                <span style ="font-size:0.8em">난이도 : 
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color: grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                               </span>
                             </div>
                         </div>
                         <!-- Product actions-->

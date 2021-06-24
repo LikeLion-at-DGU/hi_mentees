@@ -26,14 +26,48 @@
                                 <header class="mb-4">
                                     <div>   
                                         <!-- Post title-->
-                                        <h1 class="fw-bolder mb-1">{{lecture.title}}</h1>
+                                        <span>
+                                        <span class="fw-bolder mb-1" style="font-size:xx-large">{{lecture.title}} &nbsp; </span>
+                                        {% with lecture_like_users=lecture.like_users.all %}
+                                        {% if request.user in lecture_like_users %}
+                                        <a href="{% url 'lecture:like' lecture.id %}">
+                                        <i class="fas fa-heart fa-sm animated delay-1s" style="color: red;"></i>
+                                        </a>
+                                        {% elif user.is_authenticated %}
+                                        <a href="{% url 'lecture:like' lecture.id %}">
+                                        <i class="far fa-heart fa-sm animated infinite bounce delay-1s" style="color: gray;"></i>
+                                        </a>
+                                        {% else %}
+                                        <i class="far fa-heart fa-sm animated infinite bounce delay-1s" style="color: gray;"></i>
+                                        {% endif %}
+                                        <span>  + {{ lecture_like_users|length }} </span>
+                                        {% endwith %}
+                                        </span>
                                         <!-- Post categories-->
-                                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{lecture.level}}</a>
-                                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{lecture.category}}</a>
-                                        <!-- Post meta content-->
-                                        <div class="text-muted fst-italic mb-2">수강신청 기간 : 
-                                            <br>{{lecture.app_start_date}} ~ {{lecture.app_end_date}}</div>
+                                        <br>
+                                        <hr>
+                                        <span style ="font-size:0.8em"> 카테고리 : </span><a class="badge bg-secondary text-decoration-none link-light" href="#!">{{lecture.category}}</a>
+                                        <br>
+                                        <span style ="font-size:0.8em">난이도 : </span>
+                                        {% if lecture.level == 'star1' %}
+                                        <img src="{%static 'images/star1.png' %}" width=130 height=50></img>
+                                        {% endif %}
+                                        {% if lecture.level == 'star2' %}
+                                        <img src="{%static 'images/star2.png' %}" width=130 height=50></img>
+                                        {% endif %}
+                                        {% if lecture.level == 'star3' %}
+                                        <img src="{%static 'images/star3.png' %}" width=130 height=50></img>
+                                        {% endif %}
+                                        {% if lecture.level == 'star4' %}
+                                        <img src="{%static 'images/star4.png' %}" width=130 height=50></img>
+                                        {% endif %}
+                                        {% if lecture.level == 'star5' %}
+                                        <img src="{%static 'images/star5.png' %}" width=130 height=50></img>
+                                        {% endif %}
+                                        <br>
+                                        <span style ="font-size:0.8em"> 수강신청기간 : </span><span class="text-muted fst-italic mb-2">{{lecture.app_start_date}} ~ {{lecture.app_end_date}}</span>
                                     </div>
+                                  
                                 </header>
                                     <div >  
                                         {%if lecture.thumbnail %}
@@ -41,29 +75,42 @@
                                         {% endif %}
                                     </div>
                                     <div>
-                                        <br><br><br>
-                                        <h5 class="fw_bolder">강의설명 :</h5>
-                                        {{lecture.summary}}
-                                        <br><br><br>
+                                        <br><br>
+                                        <div style="width:60%; float:left;">
+                                        <div class="badge bg-secondary bg-gradient text-wrap" style="width: 8rem;">
+                                            강의설명
+                                          </div><br><br>
+                                            :  {{lecture.summary}} ....
+                                        </div>
+                                         <!-- Post meta content-->
+                                         
+                                         <div style="width:40%; float:right;">
+                                         <div class="badge bg-secondary bg-gradient text-wrap" style="width: 8rem;">
+                                            수강신청
+                                          </div><br><br>
                                         {% if user.is_authenticated %}
                                             {% if user.userprofile.job == '학생' %}
                                                 {% if user in lecture.enrol_students.all %}
-                                                <a href="{% url 'lecture:drop_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강취소</a>
+                                                &nbsp;<a href="{% url 'lecture:drop_student' lecture.id %}" type="button"  class="btn btn-outline-secondary  btn-block">수강취소</a>
                                                 {% else %}
-                                                <a href="{% url 'lecture:enrol_student' lecture.id %}" type="button" class="btn btn-outline-secondary btn-lg btn-block">수강신청</a>
+                                                &nbsp;<a href="{% url 'lecture:enrol_student' lecture.id %}" type="button"  class="btn btn-outline-secondary  btn-block">수강신청</a>
                                                 {% endif %}
                                             {% else %}
-                                                수강신청 권한이 없습니다.
+                                            <a href="#" style="color: rgb(231, 84, 58);" class="text-decoration-none">※학생만 수강신청할 수 있습니다.※</a>
                                             {% endif %}
                                         {% else %}
-                                        수강신청을 위해 로그인 하세요.
-                                        <a href="{% url 'account_login' %}" class="btn btn-secondary" >로그인</a>
-                                        <a href="{% url 'account_signup' %}" class="btn btn-secondary" >회원가입</a>
+                                        <span style ="font-size:0.9em"> 수강신청을 위해 로그인하세요 </span>
+                                        <br><br>
+                                        <a href="{% url 'account_login' %}" class="btn btn-outline-secondary btn-sm btn-block" >로그인</a>
+                                        <a href="{% url 'account_signup' %}" class="btn btn-outline-secondary btn-sm btn-block" >회원가입</a>
                                         {% endif %}
-                                        <br><br><br> 
-                                    </div>        
+                                        </div>
+                                        
+                                    </div> 
+                                    <br><br><br><br><br> <br><br><br><br><br><br> 
                                     <!-- Preview image figure-->
-                                <body>
+                                    <div>
+                                    <body>
                                     <!-- Post content-->
                                     <section class="mb-5">
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -94,7 +141,8 @@
                                         </div>
                                         <br><br><br>
                                     </section>
-                                </body>
+                                    </body>
+                                    </div>
                         
                             <br><br><br>
                     </div>

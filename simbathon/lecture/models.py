@@ -44,7 +44,8 @@ class Lecture(models.Model):
     schedule=models.ImageField(upload_to='images/',blank=True, null=True)
     #시간표
     enrol_students=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="enrol")
-    
+    #좋아요한 사용자
+    like_users=models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_lectures")
     def __str__(self):
         return self.title #입력한 데이터가 호출되면 제목이 대표값으로 나오게 한다.
 
