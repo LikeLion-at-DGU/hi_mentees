@@ -1,12 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
+{% load static %}
 
 
 <style>
-    
-
-
-
 /* Slideshow container */
 .slideshow-container {
   max-width: 100%;
@@ -143,6 +140,30 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <!--일주일 내로 시작할 강의 ->‘시간표＇상 일주일 내로 시작할 예정인 강의를 노출-->
+            {%for lecture in lectures %}
+            <div class="col mb-5 mt-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host}} <br><br>
+                                <span style ="font-size:0.8em">난이도 : {{lecture.level}}</span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+            {% endfor %} 
+             <!--인기있는 강의  좋아요 수가 가장 많은 강의를 노출-->
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image-->

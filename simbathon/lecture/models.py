@@ -40,6 +40,14 @@ class Lecture(models.Model):
     schedule=models.ImageField(upload_to='images/',blank=True, null=True)
     #시간표
     
+    POPULAR_CHOICE = (('인기강의','인기강의'),)
+    popular_lecture=models.CharField(max_length=20, choices=POPULAR_CHOICE)
+    #인기강의 선택필드
+
+    UPCOMING_CHOICE = (('일주일 내 시작될 강의','일주일 내 시작될 강의'),)
+    upcoming_lecture=models.CharField(max_length=30, choices=UPCOMING_CHOICE)
+    #일주일내 시작될 강의 선택필드
+    
     
 
     def __str__(self):
