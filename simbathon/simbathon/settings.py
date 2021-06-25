@@ -51,6 +51,8 @@ INSTALLED_APPS += [
     'lecture',
     'myPage',
     'accounts',
+    'question',
+    'review',
 ]
 
 MIDDLEWARE = [

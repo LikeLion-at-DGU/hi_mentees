@@ -16,10 +16,10 @@
                     <a class="nav-link" href="{% url 'lecture:index' %}">강의</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!">Q&A</a>
+                    <a class="nav-link" href="{% url 'question:index' %}">Q&A</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!">강의 후기</a>
+                    <a class="nav-link" href="{% url 'review:index' %}">강의 후기</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">

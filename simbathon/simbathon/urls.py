@@ -16,4 +16,6 @@ urlpatterns = [
     path('lecture/', include('lecture.urls')),
     path('accounts/',include('allauth.urls')),
     path('myPage/', include('myPage.urls')),
+    path('question/', include('question.urls')),
+    path('review/', include('review.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
