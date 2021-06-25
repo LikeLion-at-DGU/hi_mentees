@@ -6,5 +6,6 @@ from . import views
 
 app_name = "mainPage"
 urlpatterns = [
-    path('', views.ShowLecture.as_view(), name="index"),
+    #path('', main, name="main"),
+    path('', views.ShowLecture.as_view(), name="main"),
 ]
