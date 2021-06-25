@@ -9,7 +9,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30, default='')
-    email = models.EmailField(max_length=20,default='')
+    email = models.EmailField(max_length=20, default='')
     job = models.CharField(max_length=2, choices= JOB_CHOICE)
     school = models.CharField(max_length=30, default='')
     grade = models.CharField(max_length=30, default='')
