@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://files.krve.io/f/eyespot.css'>
+<link rel='stylesheet prefetch' href='https://cdn.cloudcache.dk/materialdesignicons/1.6.50/css/materialdesignicons.min.css'>
+<div class="container" style="margin-top: 5em; margin-bottom: 10em;">
+    <!--카테고리 목록-->
+    <div class="col-md-4">
+      <ul class="list-group help-group">
+        <div class="faq-list list-group nav nav-tabs">
+          <!-- 7개의 탭 -->
+          <a href="#tab1" class="list-group-item active" role="tab" data-toggle="tab">
+            마이페이지
+          </a>
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-star"></i> 신청강의목록
+          </a>
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-star"></i> 수강이력
+          </a>
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-star"></i> 수강중인 강의
+          </a>
+          <a href="{% url 'myPage:review' %}" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-account"></i> 강사진/강의 후기작성
+          </a>
+          <a href="{% url 'myPage:qna' %}" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-account-settings"></i> 나의 Q&A
+          </a>
+          <a href="{% url 'myPage:profile' %}" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-star"></i> 개인정보 관리
+          </a>
+        </div>
+      </ul>
+    </div>
+    <div id="page-content-wrapper" style="display: inline-block;">
+        <!-- Page content-->
+        <div class="container-fluid">
+            <h1 class="mt-4">QnA 수정하기</h1>
+            <table class="profile">
+                <thead>
+                <tr>
+                  <th scope="cols">항목</th>
+                  <th scope="cols">내용</th>
+                </tr>
+                </thead>
+                <tbody>
+                <form action="{% url 'myPage:update_review' review.id %}" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                <tr>
+                  <th scope="row">제목</th>
+                  <td><input type="text" name="title" value="{{review.title}}" ></td>
+                </tr>
+                <tr>
+                  <th scope="row">작성자</th>
+                  <td>{{profiles.name}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">카테고리</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">작성날짜</th>
+                    <td>{{ review.pub_date }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">사진</th>
+                  <td><input type="file" name = "image"></td>
+               </tr>
+                <tr>
+                    <th scope="row">Q&A내용</th>
+                    <td><textarea type="text" name="body" id = "" cols="60" rows="10">{{review.body}}</textarea></td>
+                </tr>
+                <tr>
+                  <td class = "update" colspan="2" style="text-align: center;">
+                    <button type="submit">제출</button>
+                  </td>
+                </tr>
+                </form>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+<style type="text/css">
+  .list-group.help-group {
+    margin-bottom: 20px;
+    padding-left: 0;
+    margin: 0;
+  }
+  .list-group.help-group .faq-list {
+    display: block;
+    top: auto;
+    margin: 0 0 32px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+  }
+  .list-group.help-group .faq-list .list-group-item {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 13px 16px;
+    background-color: #fff;
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    color: #616161;
+    transition: background-color .2s;
+  }
+  .list-group.help-group .faq-list .list-group-item i.mdi {
+    margin-right: 5px;
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+  }
+  .list-group.help-group .faq-list .list-group-item:hover {
+    background-color: #f6f6f6;
+  }
+  .list-group.help-group .faq-list .list-group-item.active {
+    background-color: #f6f6f6;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .list-group.help-group .faq-list .list-group-item:last-of-type {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom: 0;
+  }
+  
+  .tab-content.panels-faq {
+    padding: 0;
+    border: 0;
+  }
+  
+  .panel.panel-help {
+    box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+    padding-bottom: 0;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: #fff;
+    margin: 0 0 16px;
+  }
+  .panel.panel-help a[href^="#"],
+  .panel.panel-help a[href^="#"]:hover,
+  .panel.panel-help a[href^="#"]:focus {
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .panel.panel-help .panel-heading {
+    background-color: #f6f6f6;
+    padding: 0 16px;
+    line-height: 48px;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .panel.panel-help .panel-heading h2 {
+    margin: 0;
+    padding: 14px 0 14px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .panel.panel-help .panel-body {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-radius: 2px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    margin-top: 0;
+  }
+  .panel.panel-help .panel-body p {
+    margin: 0 0 16px;
+  }
+  .panel.panel-help .panel-body p:last-of-type {
+    margin: 0;
+  }
+  
+  </style>
+{%endblock%}

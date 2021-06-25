@@ -13,7 +13,9 @@ class UserProfile(models.Model):
     job = models.CharField(max_length=2, choices= JOB_CHOICE)
     school = models.CharField(max_length=30, default='')
     grade = models.CharField(max_length=30, default='')
+    school_id = models.CharField(max_length=30,default='')
     interests = models.CharField(max_length=30,default='')
+    service_hour = models.ImageField(default=0)
     admin_approved = models.BooleanField(default=False)
 
     class Meta:
