@@ -4,5 +4,3 @@ from django.db.models.deletion import CASCADE
 
 import sys
 sys.path.append("..")
-#from lecture.models import lecture 
-

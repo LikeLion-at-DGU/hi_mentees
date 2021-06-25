@@ -141,6 +141,32 @@
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <!--일주일 내로 시작할 강의 ->‘시간표＇상 일주일 내로 시작할 예정인 강의를 노출-->
+            <div class="panel-group" id="category1">
+                {% for mainPage in about_lecture %}
+                  <div class="panel panel-default panel-help">
+                    <a href="#question{{ question.id }}" data-toggle="collapse" data-parent="#category1">
+                      <div class="panel-heading">
+                        {% if question.lecture is not null %}
+                          <h2>[ {{ question.lecture.title }} ] {{ question.title }}</h2>
+                        {% else %}
+                          <h2>{{ question.title }}</h2>
+                        {% endif %}
+                      </div>
+                    </a>
+                    <div id="question{{ question.id }}" class="collapse">
+                      <div class="panel-body">
+                        {{ question.content }}
+                        <!-- 답변 -->
+                        <div style="background-color : #f8f9fa; border-radius : 1em; margin : 1em 1em; padding: 1em 1em;">
+                          <h5 style="font-weight: bold; text-decoration: underline;">{{ question.answer_user.name }}님의 답변</h5>
+                          {{ question.answer }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
+          </div>
             {%for lecture in lectures %}
             <div class="col mb-5 mt-5">
                 <div class="card h-100">
