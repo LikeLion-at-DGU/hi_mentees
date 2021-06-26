@@ -3,6 +3,7 @@ from .models import *
 import sys
 sys.path.append("..")
 from accounts.models import UserProfile
+from lecture.models import Lecture, Category
 from django.utils import timezone
 from django.core.paginator import Paginator
 
@@ -121,3 +122,9 @@ def delete_review(request,id):
     delete_review = Reviews.objects.get(id = id)
     delete_review.delete()
     return redirect('myPage:review')
+
+def enrol_list(request):
+    user = request.user
+    lectures = Lecture.objects.all()
+    mento = UserProfile.objects.all().filter(job = "강사")
+    return render(request, 'myPage/enrol_list.html', {'lectures':lectures, "mento":mento})

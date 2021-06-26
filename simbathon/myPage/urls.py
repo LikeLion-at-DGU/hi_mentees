@@ -19,4 +19,5 @@ urlpatterns = [
     path('edit_review/<str:id>', views.edit_review, name="edit_review"),
     path('update_review/<str:id>', views.update_review, name="update_review"),
     path('delete_review/<str:id>', views.delete_review, name="delete_review"),
+    path('enrol_list/' , views.enrol_list, name="enrol_list"),
 ]

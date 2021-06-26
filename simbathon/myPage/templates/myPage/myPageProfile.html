@@ -14,7 +14,7 @@
           <a href="#tab1" class="list-group-item active" role="tab" data-toggle="tab">
             마이페이지
           </a>
-          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+          <a href="{% url 'myPage:enrol_list' %}" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 신청강의목록
           </a>
           <a href="#" class="list-group-item" role="tab" data-toggle="tab">
@@ -83,6 +83,10 @@
                     <td>{{profiles.school_id}}</td>
                   </tr>
                   {% if profiles.job == "강사" %}
+                  <tr>
+                    <th scope="row">웹엑스 주소</th>
+                    <td><a href="{{profiles.webex}}">{{profiles.webex}}</a></td>
+                  </tr>
                   <tr>
                     <th scope="row">봉사(강의)시간</th>
                     <td>{{profiles.service_hour}}시간</td>
