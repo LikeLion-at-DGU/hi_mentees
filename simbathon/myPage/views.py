@@ -1,4 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.utils.datetime_safe import datetime
+from django.db.models import Q
+from question.models import UserQuestion
 from .models import *
 import sys
 sys.path.append("..")
@@ -22,34 +25,44 @@ def profile(request):
 # qna 페이지로 이동하는 함수
 def qna(request):
     user = request.user
-    qnas = QnA.objects.filter(writer = user).order_by('-id')
+    qnas = UserQuestion.objects.filter(user=user).order_by('id')
     check = request.user.email
     profiles = UserProfile.objects.get(email = check)
     page = int(request.GET.get('p',1))
     paginator = Paginator(qnas,6)
     boards = paginator.get_page(page)
     return render(request, 'myPage/myPageQ&A.html', {'qnas':qnas,'profiles':profiles, 'boards':boards})
+
+
 # qna 내용 작성하는 페이지로 이동하는 함수
 def new_qna(request):
     check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/new_qna.html', {'profiles': profiles})
+    profiles = UserProfile.objects.get(email=check)
+    lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    return render(request, 'myPage/new_qna.html', {'profiles': profiles, 'lecture_list': lecture_list})
+
+
 # qna 내용 읽어오는 함수
 def detail_qna(request,id):
-    qna = get_object_or_404(QnA, pk = id)
+    qna = get_object_or_404(UserQuestion, pk=id)
     check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/detail_qna.html', {'qna' : qna, 'profiles':profiles})
+    profiles = UserProfile.objects.get(email=check)
+    return render(request, 'myPage/detail_qna.html', {'qna': qna, 'profiles': profiles})
+
+
 # qna 작성 데이터를 저장하는 함수
 def create_qna(request):
-    new_qna = QnA()
+    new_qna = UserQuestion()
     new_qna.title = request.POST['title']
-    new_qna.writer = request.user
-    new_qna.pub_date = timezone.now()
-    new_qna.body = request.POST['body']
-    new_qna.image = request.FILES.get('image')
+    new_qna.user = request.user
+    new_qna.question_reg_date = timezone.now()
+    new_qna.category = request.POST['category_radio']
+    new_qna.lecture = request.POST['lecture_select']
+    new_qna.content = request.POST['content']
     new_qna.save()
     return redirect('myPage:detail_qna', new_qna.id)
+
+
 # qna 수정본 작성 페이지 호출하는 함수
 def edit_qna(request, id):
     qna = QnA.objects.get(id = id)
@@ -123,8 +136,37 @@ def delete_review(request,id):
     delete_review.delete()
     return redirect('myPage:review')
 
+# (학생)신청강의 목록 페이지 나오게 하기
 def enrol_list(request):
     user = request.user
-    lectures = Lecture.objects.all()
-    mento = UserProfile.objects.all().filter(job = "강사")
-    return render(request, 'myPage/enrol_list.html', {'lectures':lectures, "mento":mento})
+    now=datetime.now()
+    lectures = Lecture.objects.filter(~Q(app_end_date__lte=now), enrol_students__in = [user]).order_by('app_end_date')
+    page = int(request.GET.get('p',1))
+    paginator = Paginator(lectures,3)
+    boards = paginator.get_page(page)
+    return render(request, 'myPage/enrol_list.html', {'lectures':lectures, 'boards':boards})
+
+# (학생)수강한 강의목록 페이지 나오게 하기
+def finish_list(request):
+    user = request.user
+    now=datetime.now()
+    lectures = Lecture.objects.filter(app_end_date__lte=now, enrol_students__in = [user]).order_by('-app_end_date')
+    page = int(request.GET.get('p',1))
+    paginator = Paginator(lectures,3)
+    boards = paginator.get_page(page)
+    return render(request, 'myPage/finish_list.html', {'lectures':lectures, 'boards':boards})
+
+# (강사)강의한 강의목록 페이지 나오게 하기
+def lectured_list(request):
+    email = request.user.email
+    teacher = UserProfile.objects.get(email = email)
+    now=datetime.now()
+    lectures = Lecture.objects.filter(app_end_date__lte=now).order_by('-app_end_date')
+    page = int(request.GET.get('p',1))
+    paginator = Paginator(lectures,3)
+    boards = paginator.get_page(page)
+    teacher.service_hour = 0
+    for i in lectures:
+        teacher.service_hour += i.lec_time
+    teacher.save()
+    return render(request, 'myPage/lectured_list.html', {'lectures':lectures, 'boards':boards})    

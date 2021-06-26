@@ -15,7 +15,7 @@ class UserProfile(models.Model):
     grade = models.CharField(max_length=30, default='')
     school_id = models.CharField(max_length=30,default='')
     interests = models.CharField(max_length=30,default='')
-    service_hour = models.ImageField(default=0)
+    service_hour = models.IntegerField(default=0)
     webex = models.URLField(max_length=100, default='')
     admin_approved = models.BooleanField(default=False)
 

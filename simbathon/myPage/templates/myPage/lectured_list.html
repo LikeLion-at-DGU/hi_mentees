@@ -13,17 +13,8 @@
           <a href="{% url 'myPage:mypage' %}" class="list-group-item active" role="tab" data-toggle="tab">
             마이페이지
           </a>
-          <a href="{% url 'myPage:enrol_list' %}" class="list-group-item" role="tab" data-toggle="tab">
-            <i class="mdi mdi-star"></i> 신청강의목록
-          </a>
-          <a href="{% url 'myPage:finish_list' %}" class="list-group-item" role="tab" data-toggle="tab">
-            <i class="mdi mdi-star"></i> 수강이력
-          </a>
-          <a href="{% url 'myPage:review' %}" class="list-group-item" role="tab" data-toggle="tab">
-            <i class="mdi mdi-account"></i> 강사진/강의 후기작성
-          </a>
-          <a href="{% url 'myPage:qna' %}" class="list-group-item" role="tab" data-toggle="tab">
-            <i class="mdi mdi-account-settings"></i> 나의 Q&A
+          <a href="{% url 'myPage:lectured_list' %}" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-star"></i> 강의이력
           </a>
           <a href="{% url 'myPage:profile' %}" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 개인정보 관리
@@ -34,24 +25,24 @@
     <div class="col-md-8">
         <!-- Page content-->
         <div class="container-fluid">
-            <h1 class="mt-4">강의 신청목록</h1>
+            <h1 class="mt-4">수강이력</h1>
             <table class="profile" style="margin: 0 0 0 0; width: 100%;">
                 <thead>
                 <tr>
                   <th scope="cols"width=25%>강의명</th>
-                  <th scope="cols" width=15%>강사</th>
-                  <th scope="cols"width=30%>강의기간</th>
-                  <th scope="cols"width=30%>웹엑스주소</th>
+                  <th scope="cols" width=20%>봉사(강의)시간</th>
+                  <th scope="cols"width=55%>강의기간</th>
                 </tr>
                 </thead>
                 <tbody>
                   {% for lecture in boards %}
+                    {% if lecture.host.email == user.email %}
                     <tr>
                      <td>{{lecture.title}}</td>
-                     <td>{{lecture.host}}</td>
+                     <td>{{lecture.lec_time}}시간</td>
                      <td>{{lecture.app_start_date}} ~ {{lecture.app_end_date}}</td>
-                     <td><a href="{{lecture.host.webex}}">{{lecture.host.webex}}</a></td>
-                    </tr> 
+                    </tr>
+                    {% endif %} 
                   {% endfor %}           
                 </tbody>
             </table>

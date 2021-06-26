@@ -41,6 +41,7 @@ class Lecture(models.Model):
     #강의신청 마감일
     thumbnail=models.ImageField(upload_to='images/',blank=True, null=True)
     #강의 썸네일
+    lec_time=models.IntegerField(default=0)
     schedule=models.ImageField(upload_to='images/',blank=True, null=True)
     #시간표
     enrol_students=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="enrol")
