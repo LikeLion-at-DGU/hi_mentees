@@ -88,23 +88,7 @@
                                          <div class="badge bg-secondary bg-gradient text-wrap" style="width: 8rem;">
                                             수강신청
                                           </div><br><br>
-
-                                        {% if user.is_authenticated %}
-                                            {% if user.userprofile.job == '학생' %}
-                                                {% if user in lecture.enrol_students.all %}
-                                                &nbsp;<a href="{% url 'lecture:drop_student' lecture.id %}" type="button"  class="btn btn-outline-secondary  btn-block">수강취소</a>
-                                                {% else %}
-                                                &nbsp;<a href="{% url 'lecture:enrol_student' lecture.id %}" type="button"  class="btn btn-outline-secondary  btn-block">수강신청</a>
-                                                {% endif %}
-                                            {% else %}
-                                            <a href="#" style="color: rgb(231, 84, 58);" class="text-decoration-none">※학생만 수강신청할 수 있습니다.※</a>
-                                            {% endif %}
-                                        {% else %}
-                                        <span style ="font-size:0.9em"> 수강신청을 위해 로그인하세요 </span>
-                                        <br><br>
-                                        <a href="{% url 'account_login' %}" class="btn btn-outline-secondary btn-sm btn-block" >로그인</a>
-                                        <a href="{% url 'account_signup' %}" class="btn btn-outline-secondary btn-sm btn-block" >회원가입</a>
-                                        {% endif %}
+                                          <a href="#" style="color: rgb(231, 84, 58);" class="text-decoration-none">※아직 수강신청하실 수 없습니다.※</a>
                                         </div>
                                         
                                     </div> 
