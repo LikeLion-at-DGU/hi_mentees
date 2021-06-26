@@ -26,3 +26,4 @@ def result(request):
 	if query:
 		query_lecture = UserQuestion.objects.exclude(answer__exact='').filter(category='학습내용', lecture__title__contains=query)
 	return render(request, 'question/question_list.html', {'about_lecture': query_lecture})
+

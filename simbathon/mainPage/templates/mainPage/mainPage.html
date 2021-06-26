@@ -136,160 +136,84 @@
 </div>
 
 
-<!-- 상품 목록 -->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <!--일주일 내로 시작할 강의 ->‘시간표＇상 일주일 내로 시작할 예정인 강의를 노출-->
-            <div class="panel-group" id="category1">
-                {% for mainPage in about_lecture %}
-                  <div class="panel panel-default panel-help">
-                    <a href="#question{{ question.id }}" data-toggle="collapse" data-parent="#category1">
-                      <div class="panel-heading">
-                        {% if question.lecture is not null %}
-                          <h2>[ {{ question.lecture.title }} ] {{ question.title }}</h2>
-                        {% else %}
-                          <h2>{{ question.title }}</h2>
-                        {% endif %}
-                      </div>
-                    </a>
-                    <div id="question{{ question.id }}" class="collapse">
-                      <div class="panel-body">
-                        {{ question.content }}
-                        <!-- 답변 -->
-                        <div style="background-color : #f8f9fa; border-radius : 1em; margin : 1em 1em; padding: 1em 1em;">
-                          <h5 style="font-weight: bold; text-decoration: underline;">{{ question.answer_user.name }}님의 답변</h5>
-                          {{ question.answer }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
-            </div>
-          </div>
-            {%for lecture in lectures %}
-            <div class="col mb-5 mt-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">{{lecture.title}}</h5>
-                                {{lecture.host}} <br><br>
-                                <span style ="font-size:0.8em">난이도 : {{lecture.level}}</span>
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
-                        </div>
-                    </div>
-                </div>     
-            </div>
-            {% endfor %} 
-             <!--인기있는 강의  좋아요 수가 가장 많은 강의를 노출-->
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+  <div class="container px-4 px-lg-5 mt-5">
+    <h3> 인기 강의 </h3>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      {%for lecture in about_popularlecture %}
+        <div class="col mb-5 mt-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- Product name-->
-                            <h5 class="fw-bolder">Fancy Product</h5>
-                            <!-- Product price-->
-                            $40.00 - $80.00
+                            <h5 class="fw-bolder">{{lecture.title}}</h5>
+                            {{lecture.host}} <br><br>
+                            <span style ="font-size:0.8em">난이도 : {{lecture.level}}</span>
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            </div>     
+      {% endfor %}     
+    </div>
+    
+    <h3> 일주일 내에 시작될 강의 </h3>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      {%for lecture in about_upcominglecture %}
+        <div class="col mb-5 mt-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- Product name-->
-                            <h5 class="fw-bolder">Special Item</h5>
-                            <!-- Product reviews-->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                            <!-- Product price-->
-                            <span class="text-muted text-decoration-line-through">$20.00</span>
-                            $18.00
+                            <h5 class="fw-bolder">{{lecture.title}}</h5>
+                            {{lecture.host}} <br><br>
+                            <span style ="font-size:0.8em">난이도 : {{lecture.level}}</span>
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
                     </div>
                 </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            </div>     
+      {% endfor %} 
+    </div>
+
+    <h3>모든 강의 </h3>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      {%for lecture in about_alllecture %}
+        <div class="col mb-5 mt-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- Product name-->
-                            <h5 class="fw-bolder">Sale Item</h5>
-                            <!-- Product price-->
-                            <span class="text-muted text-decoration-line-through">$50.00</span>
-                            $25.00
+                            <h5 class="fw-bolder">{{lecture.title}}</h5>
+                            {{lecture.host}} <br><br>
+                            <span style ="font-size:0.8em">난이도 : {{lecture.level}}</span>
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
                     </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">Popular Item</h5>
-                            <!-- Product reviews-->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                            <!-- Product price-->
-                            $40.00
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
+      {% endfor %}     
+    </div>  
+       
+  </div>
 </section>
 
 <script>
