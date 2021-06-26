@@ -8,10 +8,19 @@
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link " id="second-tab" data-bs-toggle="tab" data-bs-target="#second" type="button" role="tab" aria-controls="second" aria-selected="false">카테고리1</button>
+              <button class="nav-link " id="second-tab" data-bs-toggle="tab" data-bs-target="#second" type="button" role="tab" aria-controls="second" aria-selected="false">파이썬</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="third-tab" data-bs-toggle="tab" data-bs-target="#third" type="button" role="tab" aria-controls="third" aria-selected="false">카테고리2</button>
+              <button class="nav-link" id="third-tab" data-bs-toggle="tab" data-bs-target="#third" type="button" role="tab" aria-controls="third" aria-selected="false">오조봇</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="fourth-tab" data-bs-toggle="tab" data-bs-target="#fourth" type="button" role="tab" aria-controls="fourth" aria-selected="false">구름</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="fifth-tab" data-bs-toggle="tab" data-bs-target="#fifth" type="button" role="tab" aria-controls="fifth" aria-selected="false">엔트리</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="sixth-tab" data-bs-toggle="tab" data-bs-target="#sixth" type="button" role="tab" aria-controls="sixth" aria-selected="false">기타</button>
             </li>
         </ul>
           <div class="tab-content" id="myTabContent">
@@ -24,7 +33,7 @@
                 </div>
               <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 
-                {%for lecture in ing_lectures %}
+                {%for lecture in ing_all %}
                 <div class="col mb-5 mt-5">
                     <div class="card h-100">
                         <!-- Product image-->
@@ -34,7 +43,8 @@
                             <div class="text-center">
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">{{lecture.title}}</h5>
-                                {{lecture.host}} <br><br>
+                                <!--강사이름-->
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
                                 <span style ="font-size:0.8em">난이도 : </span>
                                 {% if lecture.level == 'star1' %}
                                 <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
@@ -74,7 +84,7 @@
               </div>
               <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <br><br><br>
-                {%for lecture in expected_lectures %}
+                {%for lecture in expected_all %}
                 <div class="col mb-5 mt-5">
                     <div class="card h-100">
                         <!-- Product image-->
@@ -84,7 +94,7 @@
                             <div class="text-center">
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">{{lecture.title}}</h5>
-                                {{lecture.host}} <br><br>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
                                 <span style ="font-size:0.8em">난이도 : 
                                 {% if lecture.level == 'star1' %}
                                 <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
@@ -118,11 +128,529 @@
                 {% endfor %}     
               </div>
             </div>
-            <div class="tab-pane fade" id="second" role="tabpanel" aria-labelledby="second-tab">...</div>
-            <div class="tab-pane fade" id="third" role="tabpanel" aria-labelledby="third-tab">...</div>
+            <!--파이썬-->
+            <div class="tab-pane fade" id="second" role="tabpanel" aria-labelledby="second-tab">
+              <br><br>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="fw-bolder">오픈된 강의</div>
+                  </div>
+                </div>
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                
+                {%for lecture in ing_python %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                                <span style ="font-size:0.8em">난이도 : </span>
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color:grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}   
+              </div>
+              <br><br><br>
+                <div class="card">
+                <div class="card-body">
+                  <div class="fw-bolder">오픈 예정 강의</div>
+                </div>
+              </div>
+
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <br><br><br>
+                {%for lecture in expected_python %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                                <span style ="font-size:0.8em">난이도 : 
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color: grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                               </span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}     
+            </div>
+            </div>
+            <!--오조봇-->
+            <div class="tab-pane fade" id="third" role="tabpanel" aria-labelledby="third-tab">
+              <br><br>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="fw-bolder">오픈된 강의</div>
+                  </div>
+                </div>
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                
+                {%for lecture in ing_ozobot %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                                <span style ="font-size:0.8em">난이도 : </span>
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color:grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}   
+              </div>
+              <br><br><br>
+                <div class="card">
+                <div class="card-body">
+                  <div class="fw-bolder">오픈 예정 강의</div>
+                </div>
+              </div>
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <br><br><br>
+                {%for lecture in expected_ozobot %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명<br><br>
+                                <span style ="font-size:0.8em">난이도 : 
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color: grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                               </span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}     
+            </div>
+            </div>
+            <!--구름-->
+            <div class="tab-pane fade" id="fourth" role="tabpanel" aria-labelledby="fourth-tab">
+              <br><br>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="fw-bolder">오픈된 강의</div>
+                  </div>
+                </div>
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                
+                {%for lecture in ing_goorum %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                                <span style ="font-size:0.8em">난이도 : </span>
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color:grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}   
+              </div>
+              <br><br><br>
+                <div class="card">
+                <div class="card-body">
+                  <div class="fw-bolder">오픈 예정 강의</div>
+                </div>
+              </div>
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <br><br><br>
+                {%for lecture in expected_goorum %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                                <span style ="font-size:0.8em">난이도 : 
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color: grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                               </span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}     
+            </div>
+            </div>
+            <!--엔트리-->
+            <div class="tab-pane fade" id="fifth" role="tabpanel" aria-labelledby="fifth-tab"><br><br>
+              <div class="card">
+                <div class="card-body">
+                  <div class="fw-bolder">오픈된 강의</div>
+                </div>
+              </div>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+              
+              {%for lecture in ing_entry %}
+              <div class="col mb-5 mt-5">
+                  <div class="card h-100">
+                      <!-- Product image-->
+                      <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                      <!-- Product details-->
+                      <div class="card-body p-4">
+                          <div class="text-center">
+                              <!-- Product name-->
+                              <h5 class="fw-bolder">{{lecture.title}}</h5>
+                              {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                              <span style ="font-size:0.8em">난이도 : </span>
+                              {% if lecture.level == 'star1' %}
+                              <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star2' %}
+                              <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star3' %}
+                              <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star4' %}
+                              <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star5' %}
+                              <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              <br>
+                              {% with lecture_like_users=lecture.like_users.all %}
+                              <i class="fas fa-heart fa-sm animated delay-1s" style="color:grey;"></i>
+                              <span>  + {{ lecture_like_users|length }} </span>
+                              {% endwith %}
+                          </div>
+                      </div>
+                      <!-- Product actions-->
+                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                          <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                      </div>
+                  </div>
+              </div>
+              {% endfor %}   
+            </div>
+            <br><br><br>
+              <div class="card">
+              <div class="card-body">
+                <div class="fw-bolder">오픈 예정 강의</div>
+              </div>
+            </div>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+              <br><br><br>
+              {%for lecture in expected_entry %}
+              <div class="col mb-5 mt-5">
+                  <div class="card h-100">
+                      <!-- Product image-->
+                      <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                      <!-- Product details-->
+                      <div class="card-body p-4">
+                          <div class="text-center">
+                              <!-- Product name-->
+                              <h5 class="fw-bolder">{{lecture.title}}</h5>
+                              {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                              <span style ="font-size:0.8em">난이도 : 
+                              {% if lecture.level == 'star1' %}
+                              <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star2' %}
+                              <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star3' %}
+                              <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star4' %}
+                              <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              {% if lecture.level == 'star5' %}
+                              <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                              {% endif %}
+                              <br>
+                              {% with lecture_like_users=lecture.like_users.all %}
+                              <i class="fas fa-heart fa-sm animated delay-1s" style="color: grey;"></i>
+                              <span>  + {{ lecture_like_users|length }} </span>
+                              {% endwith %}
+                             </span>
+                          </div>
+                      </div>
+                      <!-- Product actions-->
+                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                          <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                      </div>
+                  </div>
+              </div>
+              {% endfor %}    
+             </div>
+             </div>
+            <!--기타-->
+            <div class="tab-pane fade" id="sixth" role="tabpanel" aria-labelledby="sixth-tab">
+              <br><br>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="fw-bolder">오픈된 강의</div>
+                  </div>
+                </div>
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                
+                {%for lecture in ing_etc %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명 <br><br>
+                                <span style ="font-size:0.8em">난이도 : </span>
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color:grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}   
+              </div>
+              <br><br><br>
+                <div class="card">
+                <div class="card-body">
+                  <div class="fw-bolder">오픈 예정 강의</div>
+                </div>
+              </div>
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <br><br><br>
+                {%for lecture in expected_etc %}
+                <div class="col mb-5 mt-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" width="250" height="150" src="{{lecture.thumbnail.url}}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{lecture.title}}</h5>
+                                {{lecture.host.all|random}} 외 {{lecture.host.all|length}}명<br><br>
+                                <span style ="font-size:0.8em">난이도 : 
+                                {% if lecture.level == 'star1' %}
+                                <img src="{%static 'images/star1.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star2' %}
+                                <img src="{%static 'images/star2.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star3' %}
+                                <img src="{%static 'images/star3.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star4' %}
+                                <img src="{%static 'images/star4.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                {% if lecture.level == 'star5' %}
+                                <img src="{%static 'images/star5.png' %}" width=90 height=40></img>
+                                {% endif %}
+                                <br>
+                                {% with lecture_like_users=lecture.like_users.all %}
+                                <i class="fas fa-heart fa-sm animated delay-1s" style="color: grey;"></i>
+                                <span>  + {{ lecture_like_users|length }} </span>
+                                {% endwith %}
+                               </span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{%url 'lecture:detail' lecture.id %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}     
+            </div>
           </div>
           <br><br>
         
+    </div>
     </div>
 </section>
 {% endblock %}

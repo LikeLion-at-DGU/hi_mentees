@@ -47,7 +47,11 @@
                   {% for lecture in boards %}
                     <tr>
                      <td>{{lecture.title}}</td>
-                     <td>{{lecture.host}}</td>
+                     <td>
+                      {% for i in lecture.host.all %}
+                      {{i.name}}<br>
+                      {% endfor %}
+                    </td>
                      <td>{{lecture.app_start_date}} ~ {{lecture.app_end_date}}</td>
                     </tr> 
                   {% endfor %}           

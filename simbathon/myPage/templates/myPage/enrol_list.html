@@ -38,19 +38,23 @@
             <table class="profile" style="margin: 0 0 0 0; width: 100%;">
                 <thead>
                 <tr>
-                  <th scope="cols"width=25%>강의명</th>
-                  <th scope="cols" width=15%>강사</th>
-                  <th scope="cols"width=30%>강의기간</th>
-                  <th scope="cols"width=30%>웹엑스주소</th>
+                  <th scope="cols"width=33%>강의명</th>
+                  <th scope="cols" width=10%>강사</th>
+                  <th scope="cols"width=32%>강의기간</th>
+                  <th scope="cols"width=25%>웹엑스주소</th>
                 </tr>
                 </thead>
                 <tbody>
                   {% for lecture in boards %}
                     <tr>
                      <td>{{lecture.title}}</td>
-                     <td>{{lecture.host}}</td>
+                     <td>
+                       {% for i in lecture.host.all %}
+                       {{i.name}}<br>
+                       {% endfor %} 
+                     </td>
                      <td>{{lecture.app_start_date}} ~ {{lecture.app_end_date}}</td>
-                     <td><a href="{{lecture.host.webex}}">{{lecture.host.webex}}</a></td>
+                     <td><a href="{{lecture.webex_address}}">{{lecture.webex_address}}</a></td>
                     </tr> 
                   {% endfor %}           
                 </tbody>

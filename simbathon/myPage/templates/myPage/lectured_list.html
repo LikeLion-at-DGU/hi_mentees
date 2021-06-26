@@ -25,25 +25,23 @@
     <div class="col-md-8">
         <!-- Page content-->
         <div class="container-fluid">
-            <h1 class="mt-4">수강이력</h1>
+            <h1 class="mt-4">강의이력</h1>
             <table class="profile" style="margin: 0 0 0 0; width: 100%;">
                 <thead>
                 <tr>
-                  <th scope="cols"width=25%>강의명</th>
-                  <th scope="cols" width=20%>봉사(강의)시간</th>
-                  <th scope="cols"width=55%>강의기간</th>
+                  <th scope="cols"width=23%>강의명</th>
+                  <th scope="cols" width=17%>봉사(강의)시간</th>
+                  <th scope="cols"width=60%>강의기간</th>
                 </tr>
                 </thead>
                 <tbody>
                   {% for lecture in boards %}
-                    {% if lecture.host.email == user.email %}
                     <tr>
                      <td>{{lecture.title}}</td>
                      <td>{{lecture.lec_time}}시간</td>
                      <td>{{lecture.app_start_date}} ~ {{lecture.app_end_date}}</td>
                     </tr>
-                    {% endif %} 
-                  {% endfor %}           
+                  {% endfor %}         
                 </tbody>
             </table>
             <br>

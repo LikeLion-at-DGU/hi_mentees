@@ -6,7 +6,7 @@ from .models import *
 import sys
 sys.path.append("..")
 from accounts.models import UserProfile
-from lecture.models import Lecture, Category
+from lecture.models import Lecture
 from django.utils import timezone
 from django.core.paginator import Paginator
 
@@ -144,7 +144,7 @@ def enrol_list(request):
     page = int(request.GET.get('p',1))
     paginator = Paginator(lectures,3)
     boards = paginator.get_page(page)
-    return render(request, 'myPage/enrol_list.html', {'lectures':lectures, 'boards':boards})
+    return render(request, 'myPage/enrol_list.html', {'enrol':enrol_list, 'lectures':lectures, 'boards':boards})
 
 # (학생)수강한 강의목록 페이지 나오게 하기
 def finish_list(request):
@@ -161,7 +161,7 @@ def lectured_list(request):
     email = request.user.email
     teacher = UserProfile.objects.get(email = email)
     now=datetime.now()
-    lectures = Lecture.objects.filter(app_end_date__lte=now).order_by('-app_end_date')
+    lectures = Lecture.objects.filter(app_end_date__lte=now, host__in =[teacher]).order_by('-app_end_date')
     page = int(request.GET.get('p',1))
     paginator = Paginator(lectures,3)
     boards = paginator.get_page(page)
