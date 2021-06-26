@@ -1,4 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.utils.datetime_safe import datetime
+
+from lecture.models import Lecture
+from question.models import UserQuestion
 from .models import *
 import sys
 sys.path.append("..")
@@ -21,34 +25,44 @@ def profile(request):
 # qna 페이지로 이동하는 함수
 def qna(request):
     user = request.user
-    qnas = QnA.objects.filter(writer = user).order_by('-id')
+    qnas = UserQuestion.objects.filter(user=user).order_by('id')
     check = request.user.email
     profiles = UserProfile.objects.get(email = check)
     page = int(request.GET.get('p',1))
     paginator = Paginator(qnas,6)
     boards = paginator.get_page(page)
     return render(request, 'myPage/myPageQ&A.html', {'qnas':qnas,'profiles':profiles, 'boards':boards})
+
+
 # qna 내용 작성하는 페이지로 이동하는 함수
 def new_qna(request):
     check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/new_qna.html', {'profiles': profiles})
+    profiles = UserProfile.objects.get(email=check)
+    lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    return render(request, 'myPage/new_qna.html', {'profiles': profiles, 'lecture_list': lecture_list})
+
+
 # qna 내용 읽어오는 함수
 def detail_qna(request,id):
-    qna = get_object_or_404(QnA, pk = id)
+    qna = get_object_or_404(UserQuestion, pk=id)
     check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/detail_qna.html', {'qna' : qna, 'profiles':profiles})
+    profiles = UserProfile.objects.get(email=check)
+    return render(request, 'myPage/detail_qna.html', {'qna': qna, 'profiles': profiles})
+
+
 # qna 작성 데이터를 저장하는 함수
 def create_qna(request):
-    new_qna = QnA()
+    new_qna = UserQuestion()
     new_qna.title = request.POST['title']
-    new_qna.writer = request.user
-    new_qna.pub_date = timezone.now()
-    new_qna.body = request.POST['body']
-    new_qna.image = request.FILES.get('image')
+    new_qna.user = request.user
+    new_qna.question_reg_date = timezone.now()
+    new_qna.category = request.POST['category_radio']
+    new_qna.lecture = request.POST['lecture_select']
+    new_qna.content = request.POST['content']
     new_qna.save()
     return redirect('myPage:detail_qna', new_qna.id)
+
+
 # qna 수정본 작성 페이지 호출하는 함수
 def edit_qna(request, id):
     qna = QnA.objects.get(id = id)
