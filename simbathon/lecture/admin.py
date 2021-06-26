@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Category, Lecture
+from .models import Lecture
 # Register your models here.
 
-admin.site.register(Category)
+
 admin.site.register(Lecture)

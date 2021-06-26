@@ -570,13 +570,21 @@ progress {
   max-width: 100%;
   height: auto;
 }
+.img-fluid2{
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width:60%;
+  height:auto;
+}
 
 .img-thumbnail {
   padding: 0.25rem;
   background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
-  max-width: 100%;
+  max-width: 70%;
   height: auto;
 }
 
@@ -4294,6 +4302,7 @@ textarea.form-control-lg {
 
 .card-title {
   margin-bottom: 0.5rem;
+  font-weight: 900;
 }
 
 .card-subtitle {
@@ -10915,4 +10924,8 @@ textarea.form-control-lg {
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   background: white;
+}
+.thumbanil{
+  max-width: 500px;
+  height:auto;
 }
