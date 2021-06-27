@@ -10,14 +10,17 @@
       <ul class="list-group help-group">
         <div class="faq-list list-group nav nav-tabs">
           <!-- 7개의 탭 -->
-          <a href="{% url 'myPage:mypage' %}" class="list-group-item active" role="tab" data-toggle="tab">
+          <a href="#tab1" class="list-group-item active" role="tab" data-toggle="tab">
             마이페이지
           </a>
-          <a href="{% url 'myPage:enrol_list' %}" class="list-group-item" role="tab" data-toggle="tab">
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 신청강의목록
           </a>
-          <a href="{% url 'myPage:finish_list' %}" class="list-group-item" role="tab" data-toggle="tab">
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 수강이력
+          </a>
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-star"></i> 수강중인 강의
           </a>
           <a href="{% url 'myPage:review' %}" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-account"></i> 강사진/강의 후기작성
@@ -34,7 +37,7 @@
     <div class="col-md-8">
         <!-- Page content-->
         <div class="container-fluid">
-            <h1 class="mt-4">나의 Q&A</h1>
+            <h1 class="mt-4">나의 질문</h1>
         </div>
         <!--밑에 버튼-->
         <div class = "col-md-8">
@@ -46,8 +49,8 @@
         </div>
     </div>
 
-  <div class="col-md-8">
-    <div class="tab-content panels-faq">
+    <div class="col-md-8">
+        <div class="tab-content panels-faq">
       <!-- 1. 학습내용 질문 카테고리 -->
       <div class="tab-pane active" id="tab1">
         <div class="panel-group" id="blatab1">
@@ -57,17 +60,18 @@
                     <a href="#question{{ question.id }}" data-toggle="collapse" data-parent="#blatab1">
                       <div class="panel-heading">
                           <h2>[{{ question.category }}]
-                        {% if question.lecture is not null %}
+                        {% if question.category == "학습내용" %}
                            [{{ question.lecture.title }}] {{ question.title }}
                         {% else %}
-                          {{ question.title }}</h2>
+                          질문</h2>
                         {% endif %}
                       </div>
                     </a>
                     <div id="question{{ question.id }}" class="collapse">
                       <div class="panel-body">
                           {{ question.content }}
-                          {% if question.answer != '' %}
+                          {% if question.answer == '' or question.answer is null %}
+                          {% else %}
                             <!-- 답변 -->
                             <div style="background-color : #f8f9fa; border-radius : 1em; margin : 1em 1em; padding: 1em 1em;">
                               <h5 style="font-weight: bold; text-decoration: underline;">
@@ -86,13 +90,15 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 </div>
 
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+<script>
 <script>
     $(function() {
     // Since there's no list-group/tab integration in Bootstrap
@@ -103,7 +109,6 @@
    	});
 });
 </script>
-
 <style type="text/css">
     .list-group.help-group {
       margin-bottom: 20px;
@@ -150,12 +155,12 @@
       border-bottom-right-radius: 2px;
       border-bottom: 0;
     }
-    
+
     .tab-content.panels-faq {
       padding: 0;
       border: 0;
     }
-    
+
     .panel.panel-help {
       box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
       padding-bottom: 0;
@@ -202,7 +207,6 @@
     .panel.panel-help .panel-body p:last-of-type {
       margin: 0;
     }
-    
-</style>
 
+    </style>
 {%endblock%}

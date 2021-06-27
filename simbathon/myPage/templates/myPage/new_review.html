@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
 <link rel='stylesheet prefetch' href='https://files.krve.io/f/eyespot.css'>
 <link rel='stylesheet prefetch' href='https://cdn.cloudcache.dk/materialdesignicons/1.6.50/css/materialdesignicons.min.css'>
@@ -10,14 +12,17 @@
       <ul class="list-group help-group">
         <div class="faq-list list-group nav nav-tabs">
           <!-- 7개의 탭 -->
-          <a href="{% url 'myPage:mypage' %}" class="list-group-item active" role="tab" data-toggle="tab">
+          <a href="#tab1" class="list-group-item active" role="tab" data-toggle="tab">
             마이페이지
           </a>
-          <a href="{% url 'myPage:enrol_list' %}" class="list-group-item" role="tab" data-toggle="tab">
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 신청강의목록
           </a>
-          <a href="{% url 'myPage:finish_list' %}" class="list-group-item" role="tab" data-toggle="tab">
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 수강이력
+          </a>
+          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+            <i class="mdi mdi-star"></i> 수강중인 강의
           </a>
           <a href="{% url 'myPage:review' %}" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-account"></i> 강사진/강의 후기작성
@@ -34,7 +39,7 @@
     <div id="page-content-wrapper" style="display: inline-block;">
         <!-- Page content-->
         <div class="container-fluid">
-            <h1 class="mt-4">강의 후기작성하기</h1>
+            <h1 class="mt-4">강사 후기 작성하기</h1>
             <table class="profile">
                 <thead>
                 <tr>
@@ -46,24 +51,45 @@
                 <form action="{% url 'myPage:create_review' %}" method="post">
                     {%csrf_token%}
                 <tr>
-                  <th scope="row">제목</th>
-                  <td><input type="text" name="title"></td>
-                </tr>
-                <tr>
                   <th scope="row">작성자</th>
                   <td>{{profiles.name}}</td>
                 </tr>
-                <tr>
-                    <th scope="row">강의이름</th>
-                    <td></td>
+                <tr style="display: none;">
+                    <th scope="row">카테고리</th>
+                    <td>
+                        <input name="category" value="강사리뷰">
+                    </td>
                 </tr>
+                {% if lecture_list is not null %}
                 <tr>
-                    <th scope="row">사진</th>
-                    <td><input type="file" name = "image"></td>
+                  <th scope="row">강의</th>
+                  <td>
+                    <div class="dropdown">
+                      <select name="lecture_select2" id="lecture_select2">
+                          {% for lecture in lecture_list %}
+                                <option value="{{ lecture.id }}">{{ lecture.title }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                  </td>
                 </tr>
+
                 <tr>
-                    <th scope="row">Q&A내용</th>
-                    <td><textarea type="text" name="body" id = "" cols="60" rows="10"></textarea></td>
+                  <th scope="row">강사</th>
+                  <td>
+                    <div class="dropdown">
+                      <select name="teacher_select" id="teacher_select">
+                          {% for host in host %}
+                                <option value="{{ host.id }}">{{ host.name }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th scope="row">후기내용</th>
+                    <td><textarea type="text" name="content" id = "content" cols="60" rows="10"></textarea></td>
                 </tr>
                 <tr>
                   <td class = "update" colspan="2" style="text-align: center;">
@@ -76,10 +102,6 @@
         </div>
     </div>
 </div>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 <style type="text/css">
   .list-group.help-group {
     margin-bottom: 20px;
@@ -126,12 +148,12 @@
     border-bottom-right-radius: 2px;
     border-bottom: 0;
   }
-  
+
   .tab-content.panels-faq {
     padding: 0;
     border: 0;
   }
-  
+
   .panel.panel-help {
     box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
     padding-bottom: 0;
@@ -178,6 +200,6 @@
   .panel.panel-help .panel-body p:last-of-type {
     margin: 0;
   }
-  
+
   </style>
-{%endblock%}
+{% endblock %}
