@@ -50,6 +50,14 @@ class Lecture(models.Model):
     #신청한 사용자
     like_users=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="like_lectures")
     #좋아요한 사용자
+
+    SHOWMAIN_CHOICE = (
+        ('인기강의', '인기강의'),
+        ('일주일 내 시작될 강의', '일주일 내 시작될 강의'),)
+    showmain_lecture = models.CharField(max_length=20, choices=SHOWMAIN_CHOICE, default='일주일 내 시작될 강의')
+
+    # 인기강의 선택필드    #일주일내 시작될 강의 선택필드
+
     def __str__(self):
         return self.title #입력한 데이터가 호출되면 제목이 대표값으로 나오게 한다.
 
