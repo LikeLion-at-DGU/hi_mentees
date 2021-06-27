@@ -32,7 +32,6 @@ class SignupForm(forms.Form):
         userProfile.grade = self.cleaned_data[('grade')]
         userProfile.school_id = self.cleaned_data[('school_id')]
         userProfile.interests = self.cleaned_data[('interests')]
-        userProfile.webex = self.cleaned_data[('webex')]
         userProfile.save()
         user.save()
         return user
