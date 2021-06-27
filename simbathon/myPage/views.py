@@ -3,6 +3,7 @@ from django.utils.datetime_safe import datetime
 
 from lecture.models import Lecture
 from question.models import UserQuestion
+from review.models import Review
 from .models import *
 import sys
 sys.path.append("..")
@@ -38,7 +39,7 @@ def qna(request):
 def new_qna(request):
     check = request.user.email
     profiles = UserProfile.objects.get(email=check)
-    lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    lecture_list = Lecture.objects.filter(enrol_students__email=check)
     return render(request, 'myPage/new_qna.html', {'profiles': profiles, 'lecture_list': lecture_list})
 
 
@@ -57,7 +58,9 @@ def create_qna(request):
     new_qna.user = request.user
     new_qna.question_reg_date = timezone.now()
     new_qna.category = request.POST['category_radio']
-    new_qna.lecture = request.POST['lecture_select']
+    lectureID = request.POST['lecture_select2']
+    lectureIDGet = Lecture.objects.get(id=lectureID)
+    new_qna.lecture = lectureIDGet
     new_qna.content = request.POST['content']
     new_qna.save()
     return redirect('myPage:detail_qna', new_qna.id)
@@ -69,6 +72,7 @@ def edit_qna(request, id):
     check = request.user.email
     profiles = UserProfile.objects.get(email = check)
     return render(request, 'myPage/edit_qna.html', {'qna':qna, 'profiles':profiles})
+
 # qna 수정후 데이터 베이스 저장 및 변화된 글 나오게 하는 함수
 def update_qna(request, id):
     update_qna = QnA.objects.get(id = id)
@@ -87,9 +91,9 @@ def delete_qna(request,id):
 #강사진/강의 후기 페이지로 이동하는 함수
 def review (request):
     user = request.user
-    reviews = Reviews.objects.filter(writer = user)
+    reviews = Review.objects.filter(user=user)
     check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
+    profiles = UserProfile.objects.get(email=check)
     page = int(request.GET.get('p',1))
     paginator = Paginator(reviews,6)
     boards = paginator.get_page(page)
@@ -98,6 +102,8 @@ def review (request):
 def new_review(request):
     check = request.user.email
     profiles = UserProfile.objects.get(email = check)
+    ##lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    #teacher = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
     return render(request, 'myPage/new_review.html', {'profiles': profiles})
 #강사진/강의 후기 작성내용 보는 페이지
 def detail_review(request,id):

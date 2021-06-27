@@ -84,14 +84,11 @@
                   <th scope="row">강의</th>
                   <td>
                     <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dmb1" data-bs-toggle="dropdown" aria-expanded="true">
-                        질문할 강의 선택
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dmb1">
+                      <select name="lecture_select2" id="lecture_select2">
                           {% for lecture in lecture_list %}
-                            <li><a class="dropdown-item" name="lecture_select" value="{{ lecture.id }}">{{ lecture.title }}</a></li>
+                                <option value="{{ lecture.id }}">{{ lecture.title }}</option>
                           {% endfor %}
-                      </ul>
+                      </select>
                     </div>
                   </td>
                 </tr>
@@ -211,4 +208,4 @@
   }
 
   </style>
-{%endblock%}
+{% endblock %}
