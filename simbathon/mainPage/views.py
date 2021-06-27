@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+import sys
+
+sys.path.append("..")
 from lecture.models import Lecture
 
 
@@ -14,7 +17,12 @@ class ShowLecture(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         # 선택된 대분류의 상품 목록
-        context['about_popularlecture'] = Lecture.objects.all()
-        context['about_upcominglecture'] = Lecture.objects.all()
 
+        context['about_alllecture'] = Lecture.objects.all()
+        context['about_popularlecture'] = Lecture.objects.filter(showmain_lecture='인기강의')
+        context['about_upcominglecture'] = Lecture.objects.filter(showmain_lecture='일주일 내 시작될 강의')
+
+        print(context)
         return context
+
+
