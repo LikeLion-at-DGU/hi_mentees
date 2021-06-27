@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.utils.datetime_safe import datetime
-
-from lecture.models import Lecture
+from django.db.models import Q
 from question.models import UserQuestion
 from .models import *
 import sys
 sys.path.append("..")
 from accounts.models import UserProfile
+from lecture.models import Lecture
 from django.utils import timezone
 from django.core.paginator import Paginator
 
@@ -135,3 +135,38 @@ def delete_review(request,id):
     delete_review = Reviews.objects.get(id = id)
     delete_review.delete()
     return redirect('myPage:review')
+
+# (학생)신청강의 목록 페이지 나오게 하기
+def enrol_list(request):
+    user = request.user
+    now=datetime.now()
+    lectures = Lecture.objects.filter(~Q(app_end_date__lte=now), enrol_students__in = [user]).order_by('app_end_date')
+    page = int(request.GET.get('p',1))
+    paginator = Paginator(lectures,3)
+    boards = paginator.get_page(page)
+    return render(request, 'myPage/enrol_list.html', {'enrol':enrol_list, 'lectures':lectures, 'boards':boards})
+
+# (학생)수강한 강의목록 페이지 나오게 하기
+def finish_list(request):
+    user = request.user
+    now=datetime.now()
+    lectures = Lecture.objects.filter(app_end_date__lte=now, enrol_students__in = [user]).order_by('-app_end_date')
+    page = int(request.GET.get('p',1))
+    paginator = Paginator(lectures,3)
+    boards = paginator.get_page(page)
+    return render(request, 'myPage/finish_list.html', {'lectures':lectures, 'boards':boards})
+
+# (강사)강의한 강의목록 페이지 나오게 하기
+def lectured_list(request):
+    email = request.user.email
+    teacher = UserProfile.objects.get(email = email)
+    now=datetime.now()
+    lectures = Lecture.objects.filter(app_end_date__lte=now, host__in =[teacher]).order_by('-app_end_date')
+    page = int(request.GET.get('p',1))
+    paginator = Paginator(lectures,3)
+    boards = paginator.get_page(page)
+    teacher.service_hour = 0
+    for i in lectures:
+        teacher.service_hour += i.lec_time
+    teacher.save()
+    return render(request, 'myPage/lectured_list.html', {'lectures':lectures, 'boards':boards})    

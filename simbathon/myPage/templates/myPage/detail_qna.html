@@ -10,17 +10,14 @@
       <ul class="list-group help-group">
         <div class="faq-list list-group nav nav-tabs">
           <!-- 7개의 탭 -->
-          <a href="#tab1" class="list-group-item active" role="tab" data-toggle="tab">
+          <a href="{% url 'myPage:mypage' %}" class="list-group-item active" role="tab" data-toggle="tab">
             마이페이지
           </a>
-          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+          <a href="{% url 'myPage:enrol_list' %}" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 신청강의목록
           </a>
-          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
+          <a href="{% url 'myPage:finish_list' %}" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-star"></i> 수강이력
-          </a>
-          <a href="#" class="list-group-item" role="tab" data-toggle="tab">
-            <i class="mdi mdi-star"></i> 수강중인 강의
           </a>
           <a href="{% url 'myPage:review' %}" class="list-group-item" role="tab" data-toggle="tab">
             <i class="mdi mdi-account"></i> 강사진/강의 후기작성
