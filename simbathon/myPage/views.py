@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.utils.datetime_safe import datetime
 from django.db.models import Q
 from question.models import UserQuestion
+from review.models import Review
 from .models import *
 import sys
 sys.path.append("..")
@@ -21,34 +22,23 @@ def profile(request):
     profiles = UserProfile.objects.get(email = check)
     return render(request,'myPage/myPageProfile.html', {'profiles': profiles})
 
-    
 # qna 페이지로 이동하는 함수
 def qna(request):
     user = request.user
     qnas = UserQuestion.objects.filter(user=user).order_by('id')
     check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
-    page = int(request.GET.get('p',1))
-    paginator = Paginator(qnas,6)
+    profiles = UserProfile.objects.get(email=check)
+    page = int(request.GET.get('p', 1))
+    paginator = Paginator(qnas, 6)
     boards = paginator.get_page(page)
-    return render(request, 'myPage/myPageQ&A.html', {'qnas':qnas,'profiles':profiles, 'boards':boards})
-
+    return render(request, 'myPage/myPageQ&A.html', {'qnas': qnas, 'profiles': profiles, 'boards': boards})
 
 # qna 내용 작성하는 페이지로 이동하는 함수
 def new_qna(request):
     check = request.user.email
     profiles = UserProfile.objects.get(email=check)
-    lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    lecture_list = Lecture.objects.filter(enrol_students__email=check)
     return render(request, 'myPage/new_qna.html', {'profiles': profiles, 'lecture_list': lecture_list})
-
-
-# qna 내용 읽어오는 함수
-def detail_qna(request,id):
-    qna = get_object_or_404(UserQuestion, pk=id)
-    check = request.user.email
-    profiles = UserProfile.objects.get(email=check)
-    return render(request, 'myPage/detail_qna.html', {'qna': qna, 'profiles': profiles})
-
 
 # qna 작성 데이터를 저장하는 함수
 def create_qna(request):
@@ -57,83 +47,57 @@ def create_qna(request):
     new_qna.user = request.user
     new_qna.question_reg_date = timezone.now()
     new_qna.category = request.POST['category_radio']
-    new_qna.lecture = request.POST['lecture_select']
+    lectureID = request.POST['lecture_select2']
+    lectureIDGet = Lecture.objects.get(id=lectureID)
+    new_qna.lecture = lectureIDGet
     new_qna.content = request.POST['content']
     new_qna.save()
-    return redirect('myPage:detail_qna', new_qna.id)
-
-
-# qna 수정본 작성 페이지 호출하는 함수
-def edit_qna(request, id):
-    qna = QnA.objects.get(id = id)
-    check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/edit_qna.html', {'qna':qna, 'profiles':profiles})
-# qna 수정후 데이터 베이스 저장 및 변화된 글 나오게 하는 함수
-def update_qna(request, id):
-    update_qna = QnA.objects.get(id = id)
-    update_qna.title = request.POST['title']
-    update_qna.writer = request.user
-    update_qna.pub_date = timezone.now()
-    update_qna.body = request.POST['body']
-    update_qna.save()
-    return redirect('myPage:detail_qna', update_qna.id)
-# qna 삭제 후 qna 목록으로 이동하는 함수
-def delete_qna(request,id):
-    delete_qna = QnA.objects.get(id = id)
-    delete_qna.delete()
     return redirect('myPage:qna')
 
 #강사진/강의 후기 페이지로 이동하는 함수
 def review (request):
     user = request.user
-    reviews = Reviews.objects.filter(writer = user)
+    reviews = Review.objects.filter(user=user)
     check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
+    profiles = UserProfile.objects.get(email=check)
     page = int(request.GET.get('p',1))
     paginator = Paginator(reviews,6)
     boards = paginator.get_page(page)
     return render(request, 'myPage/myPageReview.html', {'reviews':reviews,'profiles':profiles, 'boards':boards})
+
 #강사진/강의 후기 작성하는 페이지로 이동하는 함수
 def new_review(request):
     check = request.user.email
     profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/new_review.html', {'profiles': profiles})
-#강사진/강의 후기 작성내용 보는 페이지
-def detail_review(request,id):
-    review = get_object_or_404(Reviews, pk = id)
+    lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    host = UserProfile.objects.filter(job = '강사')
+    return render(request, 'myPage/new_review.html', {'profiles': profiles, 'lecture_list': lecture_list, 'host':host})
+
+
+#강사진/강의 후기 작성하는 페이지로 이동하는 함수
+def new_review_lecture(request):
     check = request.user.email
     profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/detail_review.html', {'review' : review, 'profiles':profiles})
+    lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    return render(request, 'myPage/new_review_lecture.html', {'profiles': profiles, 'lecture_list': lecture_list})
+
 #강사진/강의 후기 생성 함수
 def create_review(request):
-    new_review = Reviews()
-    new_review.title = request.POST['title']
-    new_review.writer = request.user
-    new_review.pub_date = timezone.now()
-    new_review.body = request.POST['body']
-    new_review.image = request.FILES.get('image')
+    new_review = Review()
+    new_review.category = request.POST['category']
+    lectureID = request.POST['lecture_select2']
+    lectureIDGet = Lecture.objects.get(id=lectureID)
+    new_review.lecture = lectureIDGet
+    if request.POST['category']=="강의리뷰":
+        new_review.teacher = None
+    else:
+        teacherID = request.POST['teacher_select']
+        teacherIDGet = UserProfile.objects.get(id=teacherID)
+        new_review.teacher = teacherIDGet
+    new_review.user = request.user
+    new_review.content = request.POST['content']
+    new_review.review_reg_date = timezone.now()
     new_review.save()
-    return redirect('myPage:detail_review', new_review.id)
-# 강사진/강의 후기 수정본 작성 페이지 호출하는 함수
-def edit_review(request, id):
-    review = Reviews.objects.get(id = id)
-    check = request.user.email
-    profiles = UserProfile.objects.get(email = check)
-    return render(request, 'myPage/edit_review.html', {'review':review, 'profiles':profiles})
-# qna 수정후 데이터 베이스 저장 및 변화된 글 나오게 하는 함수
-def update_review(request, id):
-    update_review = Reviews.objects.get(id = id)
-    update_review.title = request.POST['title']
-    update_review.writer = request.user
-    update_review.pub_date = timezone.now()
-    update_review.body = request.POST['body']
-    update_review.save()
-    return redirect('myPage:detail_review', update_review.id)
-
-def delete_review(request,id):
-    delete_review = Reviews.objects.get(id = id)
-    delete_review.delete()
     return redirect('myPage:review')
 
 # (학생)신청강의 목록 페이지 나오게 하기

@@ -81,6 +81,11 @@
                 <div id="question2-{{ question.id }}" class="collapse">
                   <div class="panel-body">
                     {{ question.content }}
+                    <!-- 답변 -->
+                    <div style="background-color : #f8f9fa; border-radius : 1em; margin : 1em 1em; padding: 1em 1em;">
+                      <h5 style="font-weight: bold; text-decoration: underline;">{{ question.answer_user.name }}님의 답변</h5>
+                      {{ question.answer }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -99,7 +104,12 @@
                 </a>
                 <div id="question3-{{ question.id }}" class="collapse">
                   <div class="panel-body">
-                    answer
+                    {{ question.content }}
+                    <!-- 답변 -->
+                    <div style="background-color : #f8f9fa; border-radius : 1em; margin : 1em 1em; padding: 1em 1em;">
+                      <h5 style="font-weight: bold; text-decoration: underline;">{{ question.answer_user.name }}님의 답변</h5>
+                      {{ question.answer }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -118,7 +128,12 @@
                 </a>
                 <div id="question4-{{ question.id }}" class="collapse">
                   <div class="panel-body">
-                    answer
+                    {{ question.content }}
+                    <!-- 답변 -->
+                    <div style="background-color : #f8f9fa; border-radius : 1em; margin : 1em 1em; padding: 1em 1em;">
+                      <h5 style="font-weight: bold; text-decoration: underline;">{{ question.answer_user.name }}님의 답변</h5>
+                      {{ question.answer }}
+                    </div>
                   </div>
                 </div>
               </div>
