@@ -14,9 +14,6 @@ urlpatterns = [
     path('delete_qna/<str:id>', views.delete_qna, name="delete_qna"),
     path('review/',views.review, name="review"),
     path('new_review/',views.new_review, name="new_review"),
-    path('detail_review/<str:id>',views.detail_review, name="detail_review"),
+    path('new_review_lecture/',views.new_review_lecture, name="new_review_lecture"),
     path('create_review',views.create_review, name="create_review"),
-    path('edit_review/<str:id>', views.edit_review, name="edit_review"),
-    path('update_review/<str:id>', views.update_review, name="update_review"),
-    path('delete_review/<str:id>', views.delete_review, name="delete_review"),
 ]

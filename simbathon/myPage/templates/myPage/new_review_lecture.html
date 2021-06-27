@@ -39,7 +39,7 @@
     <div id="page-content-wrapper" style="display: inline-block;">
         <!-- Page content-->
         <div class="container-fluid">
-            <h1 class="mt-4">강사 후기 작성하기</h1>
+            <h1 class="mt-4">강의 후기 작성하기</h1>
             <table class="profile">
                 <thead>
                 <tr>
@@ -57,7 +57,7 @@
                 <tr style="display: none;">
                     <th scope="row">카테고리</th>
                     <td>
-                        <input name="category" value="강사리뷰">
+                        <input name="category" value="강의리뷰">
                     </td>
                 </tr>
                 {% if lecture_list is not null %}
@@ -68,19 +68,6 @@
                       <select name="lecture_select2" id="lecture_select2">
                           {% for lecture in lecture_list %}
                                 <option value="{{ lecture.id }}">{{ lecture.title }}</option>
-                          {% endfor %}
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">강사</th>
-                  <td>
-                    <div class="dropdown">
-                      <select name="teacher_select" id="teacher_select">
-                          {% for lecture in lecture_list %}
-                                <option value="{{ lecture.host.id }}">{{ lecture.host.name }}</option>
                           {% endfor %}
                       </select>
                     </div>

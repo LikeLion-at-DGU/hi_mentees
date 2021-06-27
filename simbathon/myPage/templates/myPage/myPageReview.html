@@ -42,8 +42,11 @@
         <!--밑에 버튼-->
         <div class = "col-md-8">
             <div class = "col-12">
-                <button class = "btn btn-primary" onclick = "location.href = '{% url 'myPage:new_review' %}'" style="background-color: #777777; border: none; margin-top: 1em; margin-bottom: 1em; margin-left: 45em;">
-                    후기 등록
+                <button class = "btn btn-primary" onclick = "location.href = '{% url 'myPage:new_review' %}'" style="background-color: #777777; border: none; margin-top: 1em; margin-bottom: 0.5em; margin-left: 40em;">
+                    강사 후기 등록
+                </button>
+                <button class = "btn btn-primary" onclick = "location.href = '{% url 'myPage:new_review' %}'" style="background-color: #777777; border: none; margin-bottom: 1em; margin-left: 40em;">
+                    강의 후기 등록
                 </button>
             </div>
         </div>
@@ -59,7 +62,7 @@
                   <div class="panel panel-default panel-help">
                     <a href="#review{{ review.id }}" data-toggle="collapse" data-parent="#blatab1">
                       <div class="panel-heading">
-                        {% if review.lecture is not null %}
+                        {% if review.teacher is null %}
                            <h2>[{{ review.lecture.title }}] 강의에 대한 후기</h2>
                         {% else %}
                            <h2>[{{ review.teacher.name }}] 강사에 대한 후기</h2>
