@@ -102,8 +102,7 @@ def review (request):
 def new_review(request):
     check = request.user.email
     profiles = UserProfile.objects.get(email = check)
-    ##lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
-    #teacher = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
+    lecture_list = Lecture.objects.filter(enrol_students__email=check, app_end_date__lt=datetime.now())
     return render(request, 'myPage/new_review.html', {'profiles': profiles})
 #강사진/강의 후기 작성내용 보는 페이지
 def detail_review(request,id):
