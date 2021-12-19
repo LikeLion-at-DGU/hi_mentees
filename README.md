@@ -1,3 +1,5 @@
+<img src="https://img.shields.io/badge/python-blue?style=뱃지모양&logo=Python&logoColor=white"/> <img src="https://img.shields.io/badge/Django-lightcoral?style=뱃지모양&logo=Django&logoColor=white"/>
+
 # hi_mentees
 
 
