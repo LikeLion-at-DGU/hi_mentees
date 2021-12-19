@@ -85,13 +85,13 @@ python manage.py createsuperuser
 
 <br>
 
-### ** 후기 작성 **
+### **후기 작성**
 ![image](https://user-images.githubusercontent.com/81295661/146660525-20f45bae-1f01-487f-bf58-76915b0bd62d.png)
 ![image](https://user-images.githubusercontent.com/81295661/146660530-718d5950-d620-4def-a448-4a37fc11e55d.png)
 
 <br>
 
-## ** 강의 후기**
+## **강의 후기**
 ![image](https://user-images.githubusercontent.com/81295661/146660539-a684ed18-611b-444a-859a-4f9f41816f0c.png)
 ![image](https://user-images.githubusercontent.com/81295661/146660554-39bfc8ac-5fae-4194-aa4f-e5e0170021eb.png)
 
